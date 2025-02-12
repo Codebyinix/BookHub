@@ -1,70 +1,143 @@
-# Getting Started with Create React App
+# BookHub - Book Management Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
+BookHub is a React-based web application that allows users to browse books, search for specific titles, and manage their favorite books collection. The application features user authentication, search functionality with autocomplete, and a responsive design.
 
-## Available Scripts
+## Features
+- User authentication with Auth0
+- Book search with Algolia autocomplete
+- Favorite books management
+- Responsive design
+- Pagination
+- Protected routes for authenticated users
 
-In the project directory, you can run:
+## Prerequisites
+- Node.js (v14 or higher)
+- npm (v6 or higher)
+- Algolia account
+- Auth0 account
 
-### `npm start`
+## Installation
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. Clone the repository and install dependencies:
+```bash
+git clone <repository-url>
+cd book-app
+npm install
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+2. Install required packages:
+```bash
+npm install @auth0/auth0-react@2.3.0 
+npm install algoliasearch@4.22.1
+npm install @algolia/autocomplete-js@1.18.1
+npm install @algolia/autocomplete-theme-classic@1.18.1
+npm install react-router-dom@6.22.0
+npm install react-icons@5.4.0
+npm install lodash@4.17.21
+```
 
-### `npm test`
+## Configuration
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Auth0 Setup
+1. Create an Auth0 application at [Auth0 Dashboard](https://manage.auth0.com/)
+2. Configure the following settings in your Auth0 application:
 
-### `npm run build`
+Allowed Callback URLs:
+```
+http://localhost:3000,http://localhost:3000/
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Allowed Logout URLs:
+```
+http://localhost:3000,http://localhost:3000/
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Allowed Web Origins:
+```
+http://localhost:3000
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. Update Auth0 configuration in `App.js`:
+```javascript
+domain="your-domain.auth0.com"
+clientId="your-client-id"
+```
 
-### `npm run eject`
+### Algolia Setup
+1. Create an Algolia account at [Algolia](https://www.algolia.com/)
+2. Create a new index called 'books'
+3. Update Algolia configuration in `src/config/algolia.js`:
+```javascript
+const searchClient = algoliasearch(
+  'your-application-id',
+  'your-search-only-api-key'
+);
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Project Structure
+- `/src/components`: React components
+- `/src/context`: Context providers
+- `/src/config`: Configuration files
+- `/public`: Static assets
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Key Components
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Authentication
+The application uses Auth0 for authentication. Protected routes are implemented using the ProtectedRoute component:
+```javascript:book-app/src/components/ProtectedRoute.js
+startLine: 1
+endLine: 18
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Search Functionality
+Search is implemented using Algolia's search engine:
+```javascript:book-app/src/components/SearchBar.js
+startLine: 1
+endLine: 60
+```
 
-## Learn More
+### Favorites Management
+Favorites are managed through the FavoritesContext:
+```javascript:book-app/src/context/FavoritesContext.js
+startLine: 1
+endLine: 48
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Running the Application
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Development mode:
+```bash
+npm start
+```
 
-### Code Splitting
+Build for production:
+```bash
+npm run build
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Environment Variables
+Create a `.env` file in the root directory:
+```
+REACT_APP_AUTH0_DOMAIN=your-auth0-domain
+REACT_APP_AUTH0_CLIENT_ID=your-auth0-client-id
+REACT_APP_ALGOLIA_APP_ID=your-algolia-app-id
+REACT_APP_ALGOLIA_API_KEY=your-algolia-api-key
+```
 
-### Analyzing the Bundle Size
+## Browser Support
+The application supports:
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Contributing
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## License
+This project is licensed under the MIT License.
